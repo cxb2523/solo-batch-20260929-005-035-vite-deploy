@@ -1,0 +1,11 @@
+# 构建产物与依赖
+dist
+node_modules
+
+# 第三方锁文件与素材
+package-lock.json
+**/*.svg
+
+# 说明类文本（保留原始排版）
+README.md
+task_prompt.txt

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Single entry point: lint-staged intersects staged files with ESLint ignore
+# and delegates to the repo-checks package (npm run verify).
+npx lint-staged

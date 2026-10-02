@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  # Trade-off: checks live in a dedicated `verify` job instead of being
+  # inlined into `build`. A failing check stops the pipeline before any
+  # build minutes are spent, both jobs reuse the same npm cache, and the
+  # signal (check failure vs build failure) stays unambiguous. The cost is
+  # one extra job startup (~seconds). This job is also the safety net for
+  # commits that bypass the pre-commit hook with --no-verify: the hook and
+  # CI call the exact same `npm run verify`, so nothing slips through.
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+
+  build:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build

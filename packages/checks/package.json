@@ -1,0 +1,17 @@
+{
+  "name": "repo-checks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Single source of truth for repo checks (typecheck / lint / format). Rules are data; callers never change when a rule is added.",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./rules": "./rules.js",
+    "./eslint-ignore": "./eslint-ignore.js"
+  },
+  "bin": {
+    "repo-checks": "./cli.js",
+    "repo-checks-server": "./server.js"
+  }
+}
